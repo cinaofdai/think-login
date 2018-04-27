@@ -2,6 +2,8 @@
     "name": "dh2y/think-login",
     "description": "login for thinkphp5",
     "license": "MIT",
+    "minimum-stability": "stable",
+    "version": "1.0.1",
     "authors": [
         {
             "name": "dh2y",
