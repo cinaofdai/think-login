@@ -1,8 +1,7 @@
 {
     "name": "dh2y/think-login",
     "description": "login for thinkphp5",
-    "homepage": "https://github.com/cinaofdai/think-login",
-    "license": "Apache-2.0",
+    "license": "MIT",
     "authors": [
         {
             "name": "dh2y",
