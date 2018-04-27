@@ -1,0 +1,26 @@
+{
+    "name": "dh2y/think-login",
+    "description": "login for thinkphp5",
+    "homepage": "https://github.com/cinaofdai/think-login",
+    "license": "Apache-2.0",
+    "minimum-stability": "stable",
+    "version": "1.0.0",
+    "authors": [
+        {
+            "name": "dh2y",
+            "email": "xiaodai54_long@163.com"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/cinaofdai/think-login/issues"
+    },
+    "require": {
+        "php": ">=5.4.0",
+        "dh2y/think-crypt":"*"
+    },
+    "autoload": {
+        "psr-4": {
+            "dh2y\\login\\": "src/"
+        }
+    }
+}
