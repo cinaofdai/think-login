@@ -18,6 +18,9 @@ class login
 {
     protected $config = [
         'crypt' => 'dh2y',      //Crypt加密秘钥
+        'auth_uid' => 'authId',      //用户认证识别号(必配)
+        'not_auth_module' => 'index', // 无需认证模块
+        'user_auth_gateway' => 'index/login', // 默认网关
     ];
 
     protected $model;          //登录模型
@@ -30,11 +33,21 @@ class login
      * @param $model
      */
     public function __construct($model = 'admin'){
-        if ($config = Config::get('crypt')) {
+        if ($config = Config::get('login')) {
             $this->config = array_merge($this->config,$config);
         }
 
         $this->model = $model;
+    }
+
+    public function __set($name, $value)
+    {
+        $this->config[$name] = $value;
+    }
+
+    public function __get($name)
+    {
+        return $this->config[$name];
     }
 
     /**
@@ -61,6 +74,8 @@ class login
         $result = $this->checkPass($data['password']);
         if($result['status']==true){
 
+            session($this->config['auth_uid'], $this->member['id']);
+            session("username", $this->member['username']);
 
             //登录日志更新
             $this->member['last_login'] = time();
@@ -80,6 +95,16 @@ class login
 
         }
         return $result;
+    }
+
+    /**退出
+     * @return array
+     */
+    public function logout(){
+        session($this->config['auth_uid'], null);
+        session("username", null);
+        session(null);
+        return ['status'=>true,'message'=>'成功退出！'];
     }
 
     /**
