@@ -155,7 +155,7 @@ class login
      * @return array
      */
     public function checkPass($password){
-        if( $password!= $this->member['password']){
+        if( md5($password.$this->member['token'])!= $this->member['password']){
             return ['status'=>false,'message'=>'密码错误'];
         }
         return ['status'=>true,'message'=>'恭喜！密码正确'];
