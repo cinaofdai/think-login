@@ -33,6 +33,19 @@ composer require dh2y/think-login
 ```
 
 
+## 多用户配置
+在配置目录里面新建login_去除前缀表名
+如admin登录   login_admin
+
+```
+return [
+    'crypt' => 'dh2y',      //Crypt加密秘钥
+    'auth_uid' => 'adminXx',      //用户认证识别号(必配)
+    'not_auth_module' => 'index', // 无需认证模块
+    'user_auth_gateway' => 'index/login', // 默认网关
+];
+```
+
 ## 使用
 记住用户名和密码
 ```
