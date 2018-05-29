@@ -64,9 +64,10 @@ class login
     /**
      * 登录操作
      * @param $data
+     * @param \Closure|null $function 回调函数
      * @return array
      */
-    public function doLogin($data){
+    public function doLogin($data,\Closure  $function=null){
         $result = $this->checkMember($data);
         if ($result['status']==false){
             return $result;
@@ -91,6 +92,10 @@ class login
                 cookie('remember', $remember);//记住我
             }else{
                 cookie('remember', null);
+            }
+
+            if($function!=null){
+                $function($this->member);
             }
 
         }
