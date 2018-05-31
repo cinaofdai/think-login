@@ -21,11 +21,17 @@ class login
         'auth_uid' => 'authId',      //用户认证识别号(必配)
         'not_auth_module' => 'index', // 无需认证模块
         'user_auth_gateway' => 'index/login', // 默认网关
+
+        //登录场景默认用户名登录  'username' 用户名登录 'phone' 手机号登录   'username|phone'用户名或者手机号登录
+        'scene'     =>   'username'
     ];
 
     protected $model;          //登录模型
     protected $member;         //后台用户
     protected $error;
+
+
+    protected $scene;         //登录场景
 
     /**
      * 加载配置
@@ -60,6 +66,21 @@ class login
         $remember = Crypt::decrypt(cookie('remember'),$this->config['crypt']);
         return unserialize($remember);
     }
+
+    /**
+     * 场景登录
+     * @param $data
+     * @param \Closure|null $function
+     * @param string $scene
+     * @return array
+     */
+    public function sceneLogin($data,$scene='',\Closure  $function=null){
+        //判断登录场景是否存在
+        $this->config['scene'] = ($scene!='')?$scene:$this->config['scene'];
+
+        return $this->doLogin($data,$function);
+    }
+
 
     /**
      * 登录操作
@@ -119,7 +140,7 @@ class login
      */
     public function validate($data){
         $rule = [
-            ['username','require','用户名必须！'], //默认情况下用正则进行验证
+            ['username','require','登录账户必须！'], //默认情况下用正则进行验证
             ['password','require|length:6,16','密码不能为空！|请输入6~16位有效字符'],
             ['verify','require|captcha:login','验证码不能为空！|验证码错误！'],
         ];
@@ -145,7 +166,8 @@ class login
             return ['status'=>false,'message'=>$this->getError()];
         }
 
-        $map['username'] = $data['username'];
+        //按照登录场景来区分
+        $map[$this->config['scene']] = $data['username'];
         $map['status'] = 1;
         $this->member = Db::name($this->model)->where($map)->find();
         if ( $this->member){

@@ -43,6 +43,9 @@ return [
     'auth_uid' => 'adminXx',      //用户认证识别号(必配)
     'not_auth_module' => 'index', // 无需认证模块
     'user_auth_gateway' => 'index/login', // 默认网关
+	
+	// 'username' 用户名登录 'phone' 手机号登录   'username|phone'用户名或者手机号登录  'username|email' 用户名或邮箱登录 'username|phone|email'等等...
+	'scene'     =>   'username|phone'    
 ];
 ```
 
@@ -61,5 +64,19 @@ return $member->remember();
 $login = new login('admin');
 $data = request()->post();
 return $login->doLogin($data);
+```
+登录操作(而外操作)
+```
+$login = new login('admin');
+$data = request()->post();
+return  $login->doLogin($data,function ($model){
+                session('tenant',$model['real_name']);
+            });
+```
+场景登录操作
+```
+$login = new login('admin');
+$data = request()->post();
+return $login->sceneLogin($data,'username|email'); //用户名或邮箱登录
 ```
 
