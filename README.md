@@ -11,9 +11,16 @@ composer require dh2y/think-login
 或者
 
 ### 二、require安装
+#### 2-1、 5.0安装
 ```
 "require": {
-        "dh2y/think-login":"*"
+        "dh2y/think-login":"1.*"
+},
+```
+#### 2-2、 5.1安装
+```
+"require": {
+        "dh2y/think-login":"2.*"
 },
 ```
 

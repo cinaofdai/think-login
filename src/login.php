@@ -9,7 +9,7 @@
 namespace dh2y\login;
 
 
-use think\Config;
+use think\facade\Config;
 use think\crypt\Crypt;
 use think\Db;
 use think\Validate;
