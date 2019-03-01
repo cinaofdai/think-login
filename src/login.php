@@ -12,7 +12,7 @@ namespace dh2y\login;
 use think\facade\Config;
 use think\crypt\Crypt;
 use think\Db;
-use think\Validate;
+use think\facade\Validate;
 
 class login
 {
@@ -140,11 +140,20 @@ class login
      */
     public function validate($data){
         $rule = [
-            ['username','require','登录账户必须！'], //默认情况下用正则进行验证
-            ['password','require|length:6,16','密码不能为空！|请输入6~16位有效字符'],
-            ['verify','require|captcha:login','验证码不能为空！|验证码错误！'],
+            'username'=>'require', //默认情况下用正则进行验证
+            'password'=>'require|length:6,16',
+            'verify'=>'require|captcha:login',
         ];
-        $validate = new Validate($rule);
+
+        $msg = [
+            'username.require' => '登录账户必须！',
+            'password.require'     => '密码不能为空！',
+            'password.length'   => '请输入6~16位有效字符',
+            'verify.require'  => '验证码不能为空',
+            'verify.captcha'        => '验证码错误！',
+        ];
+
+        $validate =  Validate::make($rule,$msg);
         $result   = $validate->check($data);
         if($result){
             return true;
