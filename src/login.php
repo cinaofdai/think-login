@@ -39,7 +39,7 @@ class login
      * @param $model
      */
     public function __construct($model = 'admin'){
-        if ($config = Config::get('login_'.$model)) {
+        if ($config = Config::get('login_'.$model.'.')) {
             $this->config = array_merge($this->config,$config);
         }
 

@@ -3,7 +3,7 @@
     "description": "login for thinkphp5",
     "license": "MIT",
     "minimum-stability": "stable",
-    "version": "2.2",
+    "version": "2.2.1",
     "authors": [
         {
             "name": "dh2y",
